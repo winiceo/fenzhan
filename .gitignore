@@ -1,0 +1,5 @@
+./install/
+
+temp/
+.idea/
+./vendor

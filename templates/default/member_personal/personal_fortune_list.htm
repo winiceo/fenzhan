@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=gb2312">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>{#$title#}</title>
+    <link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico"/>
+    <meta name="author" content="骑士CMS"/>
+    <meta name="copyright" content="74cms.com"/>
+    <link rel="stylesheet" href="{#$QISHI.site_template#}css/user_common.css"/>
+    <link rel="stylesheet" href="{#$QISHI.site_template#}css/user_personal.css"/>
+    <link href="{#$QISHI.site_template#}css/user_company.css" rel="stylesheet" type="text/css"/>
+
+    <script src="{#$QISHI.site_template#}js/jquery.js"></script>
+    <script src="{#$QISHI.site_template#}js/date.js"></script>
+    <script src="{#$QISHI.site_template#}js/jquery.validate.min.js" type='text/javascript'
+            language="javascript"></script>
+    <script>
+        $(document).ready(function () {
+
+        });
+    </script>
+    <style type="text/css">
+        .data-box {
+            border: 1px solid #ccc;
+            background-color: #fff;
+            font-family: "SimSun";
+            margin-top: 10px;
+        }
+
+        .data-box .data-title {
+            padding: 0 15px;
+            height: 50px;
+            line-height: 50px;
+            text-align: left;
+            background-color: #f5f5f5;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .link_lan tr {
+            height: 50px;
+        }
+
+        .link_lan tr td {
+            padding-left: 20px;
+        }
+
+        select {
+
+            height: 30px;
+            font-size: 12px;
+            line-height: 1;
+            border: 1px solid gray;
+
+        }
+
+        #AutoNumber1 {
+            border: 1px solid red;
+            width: 100%;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body {#if
+      $QISHI.body_bgimg#}style="background:url({#$QISHI.site_domain#}{#$QISHI.site_dir#}data/{#$QISHI.updir_images#}/{#$QISHI.body_bgimg#}) repeat-x center 38px;"
+      {#
+/if#}>
+{#include file="user/header.htm"#}
+<div class="page_location link_bk">当前位置：<a href="{#$QISHI.site_dir#}">首页</a> > <a href="{#$userindexurl#}">会员中心</a> >
+    收到的简历
+</div>
+<div class="usermain">
+    <div class="leftmenu  com link_bk">
+        {#include file="member_personal/left.htm"#}
+    </div>
+    <div class="rightmain">
+        <div class="bbox1">
+            <div class="topnav get_resume">
+                <div class="titleH1">
+                    <div class="h1-title">周易性格评测</div>
+                </div>
+                <div class="navs link_bk">
+                    <a href="?act=fortune" {#if $act=="fortune"#}class="se"{#/if#}>周易性格评测<span class="check"></span></a>
+
+                    <a href="?act=fotrune_list" {#if $act=="fotrune_list"#}class="se"{#/if#}>测算结果列表<span
+                            class="check"> </span></a>
+
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <div class="company-data-list">
+                <div class="c-data-top apply_jobs clearfix">
+                    <div class="item f-left check-item"><input type="checkbox" name="chkAll" id="chk"
+                                                               title="全选/反选"/></div>
+
+                    <div class="item f-left top-item4">姓名</div>
+                    <div class="item f-left top-item4">性别</div>
+                    <div class="item f-left top-item4">测算时间</div>
+                    <div class="item f-left top-item4">测算类型</div>
+                    <div class="item f-left  ">查看</div>
+
+                </div>
+                {#if $fortune_list#}
+                {#foreach from=$fortune_list item=list#}
+
+                <div class="c-data-row">
+                    <div class='c-data-content apply_jobs clearfix {#if $list.personal_look=="1" && $smarty.get.look==""#}data-no-read{#/if#}'>
+                        <div class="c-item f-left check-item"><input name="y_id[]" type="checkbox" id="y_id"
+                                                                     value="{#$list.id#}"/></div>
+
+                        <div class="c-item f-left content4"> {#$list.name#} </div>
+                        <div class="c-item f-left content4"> {#if $list.sex==1#}男{#else#}女{#/if#} &ensp;</div>
+                        <div class="c-item f-left content4">{#$list.addtime#}</div>
+                        <div class="c-item f-left content4">{#$list.category_cn#} &ensp;</div>
+                        <div class="c-item f-left  "><a href="?act=fotrune_show&id={#$list.id#}"  >查看结果</a></div>
+                    </div>
+                </div>
+
+
+                {#/foreach#}
+
+                {#else#}
+                <div class="emptytip">没有找到对应的信息！</div>
+                {#/if#}
+            </div>
+
+            </form>
+            {#if $page#}
+            <table border="0" align="center" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td height="50" align="center">
+                        <div class="page link_bk">{#$page#}</div>
+                    </td>
+                </tr>
+            </table>
+            {#/if#}
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+{#include file="user/footer.htm"#}
+</body>
+</html>

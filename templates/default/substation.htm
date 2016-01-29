@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" class="index37-bg">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=gb2312">
+<meta name="renderer" content="webkit"> 
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/> 
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<title>选择分站</title>
+<link rel="stylesheet" href="{#$QISHI.site_template#}css/sub-station.css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type="text/javascript" language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.autoshowsubsite.js" type="text/javascript" language="javascript"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	var hotKey = $('#select_subsite').autocomplete({
+		serviceUrl:"{#$QISHI.site_dir#}plus/ajax_common.php?act=sel_subsite",
+		minChars:1, 
+		maxHeight:400,
+		width:223,
+		zIndex: 1,
+		deferRequestBy: 0 
+	});
+});
+</script>
+</head>
+<body>
+	<div class="sub-page-header">
+		<div class="sub-container clearfix">
+			<div class="logo-box f-left"><a href="{#$QISHI.site_dir#}"><img src="{#$QISHI.upfiles_dir#}{#$QISHI.web_logo#}" alt="{#$QISHI.site_name#}" height="70" border="0"/></a></div>
+			<div class="sub-bg-text f-left"><p>{#$QISHI.site_name#}是国内领先的免费招聘网站，每天有<br />数万条简历和职位发布，您可以在这里免费发布和浏览  <a href="{#"QS_jobslist"|qishi_url#}" class="underline">职位</a><br /><a href="{#"QS_resumelist"|qishi_url#}" class="underline">简历</a> <a href="{#"QS_jobfairlist"|qishi_url#}" class="underline">招聘会</a> <a href="{#"QS_salary"|qishi_url#}" class="underline">查薪资</a> <a href="{#"QS_news"|qishi_url#}" class="underline">招聘资讯</a>等各种招聘信息，<br />&emsp;&emsp;&emsp;免费发布 招聘/求职 就在 <a href="{#$QISHI.site_dir#}" class="underline">{#$QISHI.site_name#}</a>！ </p></div>
+			<div class="sub-right-code f-right">
+				<div class="code-img"><img src="{#$QISHI.upfiles_dir#}{#$QISHI.weixin_img#}" alt="" width="87" height="87" /></div>
+				<p>微信求职/招聘</p>
+			</div>
+		</div>
+	</div>
+	<div class="sub-container">
+		<div class="s-page-wrapper">
+			<div class="s-page-filter clearfix">
+				<div class="puick-enter f-left">
+					<span class="f-left">直接选择：</span>
+					<div class="puick-enter-text f-left" style="position:relative;">
+						<input type="text" placeholder="请选择城市......" id="select_subsite"/>
+					</div>
+					<div class="puick-hot f-left">
+						热门地区：
+						{#qishi_allsite set="列表名:hot_city,数量:8"#}
+						{#foreach from=$hot_city item=li#}
+						<a href="{#$li.s_domain#}" class="underline">{#$li.s_districtname#}</a>
+						{#/foreach#}
+						</div>
+				</div>
+				<a href="{#$QISHI.main_domain#}" class="enter-index f-right underline">进入总站>></a>
+			</div>
+			<div class="station-set">
+				<h3>按照拼音首字母选择</h3>
+				{#qishi_allsite set="列表名:city,字母:1,分批:10"#}
+				<div class="set-list-wrap clearfix">
+					<div class="set-list f-left">
+						{#foreach from=$city.0 item=list key=k#}
+						<div class="set-item">
+							<span class="station-word">{#$k#}</span>
+							{#foreach from=$list item=li#}
+							<a href="{#$li.s_domain#}" class="underline">{#$li.s_districtname#}</a>
+							{#/foreach#}
+						</div>
+						{#/foreach#}
+					</div>
+					<div class="set-list f-left">
+						{#foreach from=$city.1 item=list key=k#}
+						<div class="set-item">
+							<span class="station-word">{#$k#}</span>
+							{#foreach from=$list item=li#}
+							<a href="{#$li.s_domain#}" class="underline">{#$li.s_districtname#}</a>
+							{#/foreach#}
+						</div>
+						{#/foreach#}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="sub-page-footer">
+		Copyright @ 2015 74cms.com All Right Reserved<br />Powered by 74cms v3.7 迅易科技版权所有
+	</div>
+
+
+</body>

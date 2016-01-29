@@ -1,0 +1,528 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=gb2312">
+<meta name="renderer" content="webkit"> 
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/> 
+<title>{#$title#}</title>
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<link rel="stylesheet" href="{#$QISHI.site_template#}css/user_common.css" />
+<link rel="stylesheet" href="{#$QISHI.site_template#}css/user_personal.css" />
+<script src="{#$QISHI.site_template#}js/jquery.js"></script>
+<script src="{#$QISHI.site_template#}js/date.js"></script>
+<script src="{#$QISHI.site_template#}js/jquery.validate.min.js" type='text/javascript' language="javascript"></script>
+<script>
+	$(document).ready(function() {
+		// 下拉
+		$('.send-down').on('click', function(e){
+			$(this).find('.send-list').stop().slideToggle('fast');
+			$(document).one("click",function(){
+				$('.send-list').slideUp('fast');
+			});
+			e.stopPropagation();
+		});
+		//简历 下拉
+		$(".send-list li").each(function() {
+			$(this).click(function(){
+				var resume_title= $(this).attr("r_title");
+				var resume_id= $(this).attr("resume_id");
+				$(".send-span .name").html(resume_title);
+				$("#resume_id").val(resume_id);
+				$("#resume_title").val(resume_title);
+			})
+		});
+		//验证码随机
+		$("#getcode").live('click',function(){
+			$(this).attr('src','{#$QISHI.site_dir#}include/imagecaptcha.php?t='+Math.random()+'');
+		});
+		//验证
+		$("#Form1").validate({
+			rules:{
+				resume_id:{
+					required: true
+				},
+				email:
+				{
+					required: true
+				},
+				companyname:{
+					required: true,
+					byteRangeLength:[1, 40]
+				},
+				jobs_name: {
+					required:true,
+					byteRangeLength:[1, 40]
+				},
+				postcaptcha: {
+					IScaptchastr:true,
+					required:true,
+					remote:{     
+						url:"{#$QISHI.site_dir#}include/imagecaptcha.php",     
+						type:"post",    
+						data:{"postcaptcha":function (){return $("#postcaptcha").val()},"act":"verify","time":function (){return new Date().getTime()}}     
+					}
+				}
+			},
+			messages: {
+				resume_id:{
+					required: "请选择发送简历"
+				},
+				email:
+				{
+					required: "请输入邮箱"	
+				},
+				companyname: {
+					required: "请输入企业名称"
+				},
+				jobs_name: {
+					required: "请输入职位名称"
+				},
+				postcaptcha: {
+					required: jQuery.format("请输入验证码"),
+					remote: jQuery.format("验证码错误")
+				}
+			},
+			errorPlacement: function(error, element) {
+				if ( element.is(":radio") )
+					error.appendTo( element.parent().next().next() );
+				else if ( element.is(":checkbox") )
+					error.appendTo ( element.next());
+				else
+					error.appendTo(element.parent());
+			}
+		});
+		//中文字两个字节
+		jQuery.validator.addMethod("byteRangeLength", function(value, element,  param) {
+			var length = value.length;
+			for (var i = 0; i < value.length; i++) {
+				if (value.charCodeAt(i) > 127) {
+					length++;
+				}
+			}
+			return this.optional(element) || (length >= param[0] && length <= param[1]);
+		}, "不能超过20字");
+
+		jQuery.validator.addMethod("IScaptchastr", function(value, element) {
+			var str="点击获取验证码";
+			var flag=true;
+			if (str==value)
+			{
+				flag=false;
+			}
+			return  flag || this.optional(element) ;
+		}, "请填写验证码");
+
+
+		function imgcaptcha(inputID,imgdiv)
+		{
+			$(inputID).focus(function(){
+				if ($(inputID).val()=="点击获取验证码")
+				{
+					$(inputID).val("");
+					$(inputID).css("color","#333333");
+				}
+				$(inputID).parent("div").css("position","relative");
+				//设置验证码DIV
+				$(imgdiv).css({ position: "absolute", left:  $(inputID).width(), "bottom": "0px" , "z-index": "10", "background-color": "#FFFFFF", "border": "1px #A3C8DC solid","display": "none","margin-left": "25px"});
+				$(imgdiv).show();
+				if ($(imgdiv).html()=='')
+				{
+					$(imgdiv).append("<img src=\"{#$QISHI.site_dir#}include/imagecaptcha.php?t={#$random#}\" id=\"getcode\" align=\"absmiddle\"  style=\"cursor:pointer; margin:3px;\" title=\"看不请验证码？点击更换一张\"  border=\"0\"/>");
+				}
+				$(imgdiv+" img").click(function()
+				{
+					$(imgdiv+" img").attr("src",$(imgdiv+" img").attr("src")+"1");		
+				});
+				$(document).unbind().click(function(event)
+				{
+					var clickid=$(event.target).attr("id");
+					if (clickid!="getcode" &&  clickid!="postcaptcha")
+					{
+						$(imgdiv).hide();
+						$(inputID).parent("div").css("position","");
+						$(document).unbind();
+					}			
+				});
+			});
+		}
+		imgcaptcha("#postcaptcha","#imgdiv");
+	});
+</script>
+<style type="text/css">
+	.data-box {
+		border: 1px solid #ccc;
+		background-color: #fff;
+		font-family: "SimSun";
+		margin-top: 10px;
+	}
+	.data-box .data-title {
+		padding: 0 15px;
+		height: 50px;
+		line-height: 50px;
+		text-align: left;
+		background-color: #f5f5f5;
+		border-bottom: 1px solid #ccc;
+	}
+	.link_lan tr{
+		height:50px;
+	}
+	.link_lan tr td{
+		 padding-left:20px;
+	 }
+	select {
+
+
+		height:30px;
+
+		line-height: 1;
+		border: 1px solid gray;
+
+
+
+	}
+	#AutoNumber1 {
+		border:1px solid red;
+		width:100%;
+
+	}
+</style>
+</head>
+<body {#if $QISHI.body_bgimg#}style="background:url({#$QISHI.site_domain#}{#$QISHI.site_dir#}data/{#$QISHI.updir_images#}/{#$QISHI.body_bgimg#}) repeat-x center 38px;"{#/if#}>
+{#include file="user/header.htm"#}
+<div class="page_location link_bk">当前位置：<a href="{#$QISHI.site_dir#}">首页</a> > <a href="{#$userindexurl#}">会员中心</a> > 外发简历</div>
+	<div class="usermain">
+		<div class="leftmenu link_bk">
+			{#include file="member_company/left.htm"#}
+		</div>
+		<div class="rightmain">
+			<div class="bbox1">
+				<div class="topnav get_resume">
+					<div class="titleH1">
+						<div class="h1-title">周易性格评测</div>
+					</div>
+					<div class="navs link_bk">
+						<a href="?act=fortune" {#if $act=="fortune"#}class="se"{#/if#}>周易性格评测<span class="check"></span></a>
+
+						<a href="?act=fotrune_list" {#if $act=="fotrune_list"#}class="se"{#/if#}>测算结果列表<span class="check"> </span></a>
+
+						<div class="clear"></div>
+					</div>
+				</div>
+				<div class="resume-send-wrap">
+
+					<div class="resume-send-form">
+
+						<div class="send-tip-box">
+							<h3>小贴士</h3>
+							<p>
+								祝福:这是来自密教图腾上的文字.不管你迷信不迷信,这个网页应该读一下,好吗?她将会带你好运,希望你一生幸福平安<br>
+							</p>
+
+						</div>
+						<div align="center">
+							<div class="data-box">
+								<div class="data-title">
+									<h3>算一算</h3>
+ 								</div>
+								<div class="job-normal-list clearfix">
+									<form id="Form1" name="Form1" method="post" action="?act=fotrune_save">
+									<table width="100%" border="0" cellpadding="0" cellspacing="0"  id="list" class="link_lan">
+
+
+										<tr>
+											<td   >
+												<input type="radio" name="category" value="1" checked>性格分析
+												<input type="radio" name="category" value="2">怎么相处您的朋友
+												<input type="radio" name="category" value="3">如何追到你喜欢的人
+												<input type="radio" name="category" value="4">作为夫妻会怎么样
+												<input type="radio" name="category" value="5">我要感化我的同事
+												<input type="radio" name="category" value="6">要在商场战胜客户
+												<input type="radio" name="category" value="7">命理
+											</td>
+										</tr>
+
+
+										<tr>
+											<td    >
+
+												<p align="left">
+
+													姓名:<input type="text" name="name" class="input_text_100" >
+													性别:
+													<select name="X2" size="1">
+														<option  value="1">男</option>
+														<option selected value="2">女</option>
+													</select>&nbsp;阴历 年:<select name="D1" size="1">
+														<option value="1900庚子">1900庚子</option>
+														<option value="1901辛丑">1901辛丑</option>
+														<option value="1902壬寅">1902壬寅</option>
+														<option value="1903癸卯">1903癸卯</option>
+														<option value="1904甲辰">1904甲辰</option>
+														<option value="1905乙巳">1905乙巳</option>
+														<option value="1906丙午">1906丙午</option>
+														<option value="1907丁未">1907丁未</option>
+														<option value="1908戊申">1908戊申</option>
+														<option value="1909己酉">1909己酉</option>
+														<option value="1910庚戌">1910庚戌</option>
+														<option value="1911辛亥">1911辛亥</option>
+														<option value="1912壬子">1912壬子</option>
+														<option value="1913癸丑">1913癸丑</option>
+														<option value="1914甲寅">1914甲寅</option>
+														<option value="1915乙卯">1915乙卯</option>
+														<option value="1916丙辰">1916丙辰</option>
+														<option value="1917丁巳">1917丁巳</option>
+														<option value="1918戊午">1918戊午</option>
+														<option value="1919己未">1919己未</option>
+														<option value="1920庚申">1920庚申</option>
+														<option value="1921辛酉">1921辛酉</option>
+														<option value="1922壬戌">1922壬戌</option>
+														<option value="1923癸亥">1923癸亥</option>
+														<option value="1924甲子">1924甲子</option>
+														<option value="1925乙丑">1925乙丑</option>
+														<option value="1926丙寅">1926丙寅</option>
+														<option value="1927丁卯">1927丁卯</option>
+														<option value="1928戊辰">1928戊辰</option>
+														<option value="1929己巳">1929己巳</option>
+														<option value="1930庚午">1930庚午</option>
+														<option value="1931辛未">1931辛未</option>
+														<option value="1932壬申">1932壬申</option>
+														<option value="1933癸酉">1933癸酉</option>
+														<option value="1934甲戌">1934甲戌</option>
+														<option value="1935乙亥">1935乙亥</option>
+														<option value="1936丙子">1936丙子</option>
+														<option value="1937丁丑">1937丁丑</option>
+														<option value="1938戊寅">1938戊寅</option>
+														<option value="1939己卯">1939己卯</option>
+														<option value="1940庚辰">1940庚辰</option>
+														<option value="1941辛巳">1941辛巳</option>
+														<option value="1942壬午">1942壬午</option>
+														<option value="1943癸未">1943癸未</option>
+														<option value="1944甲申">1944甲申</option>
+														<option value="1945乙酉">1945乙酉</option>
+														<option value="1946丙戌">1946丙戌</option>
+														<option value="1947丁亥">1947丁亥</option>
+														<option value="1948戊子">1948戊子</option>
+														<option value="1949己丑">1949己丑</option>
+														<option value="1950庚寅">1950庚寅</option>
+														<option value="1951辛卯">1951辛卯</option>
+														<option value="1952壬辰">1952壬辰</option>
+														<option value="1953癸巳">1953癸巳</option>
+														<option value="1954甲午">1954甲午</option>
+														<option value="1955乙未">1955乙未</option>
+														<option value="1956丙申">1956丙申</option>
+														<option value="1957丁酉">1957丁酉</option>
+														<option value="1958戊戌">1958戊戌</option>
+														<option value="1959己亥">1959己亥</option>
+														<option value="1960庚子">1960庚子</option>
+														<option value="1961辛丑">1961辛丑</option>
+														<option value="1962壬寅">1962壬寅</option>
+														<option value="1963癸卯">1963癸卯</option>
+														<option value="1964甲辰">1964甲辰</option>
+														<option value="1965乙巳">1965乙巳</option>
+														<option value="1966丙午">1966丙午</option>
+														<option value="1967丁未">1967丁未</option>
+														<option value="1968戊申">1968戊申</option>
+														<option value="1969己酉">1969己酉</option>
+														<option  value="1970庚戌">1970庚戌</option>
+														<option value="1971辛亥">1971辛亥</option>
+														<option value="1972壬子">1972壬子</option>
+														<option value="1973癸丑">1973癸丑</option>
+														<option value="1974甲寅">1974甲寅</option>
+														<option value="1975乙卯">1975乙卯</option>
+														<option value="1976丙辰">1976丙辰</option>
+														<option value="1977丁巳">1977丁巳</option>
+														<option selected  value="1978戊午">1978戊午</option>
+														<option value="1979己未">1979己未</option>
+														<option value="1980庚申">1980庚申</option>
+														<option value="1981辛酉">1981辛酉</option>
+														<option value="1982壬戌">1982壬戌</option>
+														<option value="1983癸亥">1983癸亥</option>
+														<option value="1984甲子">1984甲子</option>
+														<option value="1985乙丑">1985乙丑</option>
+														<option value="1986丙寅">1986丙寅</option>
+														<option value="1987丁卯">1987丁卯</option>
+														<option value="1988戊辰">1988戊辰</option>
+														<option value="1989己巳">1989己巳</option>
+														<option value="1990庚午">1990庚午</option>
+														<option value="1991辛未">1991辛未</option>
+														<option value="1992壬申">1992壬申</option>
+														<option value="1993癸酉">1993癸酉</option>
+														<option value="1994甲戌">1994甲戌</option>
+														<option value="1995乙亥">1995乙亥</option>
+														<option value="1996丙子">1996丙子</option>
+														<option value="1997丁丑">1997丁丑</option>
+														<option value="1998戊寅">1998戊寅</option>
+														<option value="1999己卯">1999己卯</option>
+														<option value="2000庚辰">2000庚辰</option>
+														<option value="2001辛巳">2001辛巳</option>
+														<option value="2002壬午">2002壬午</option>
+														<option value="2003癸未">2003癸未</option>
+														<option value="2004甲申">2004甲申</option>
+														<option value="2005乙酉">2005乙酉</option>
+														<option value="2006丙戌">2006丙戌</option>
+														<option value="2007丁亥">2007丁亥</option>
+														<option value="2008戊子">2008戊子</option>
+														<option value="2009己丑">2009己丑</option>
+														<option value="2010庚寅">2010庚寅</option>
+														<option value="2011辛卯">2011辛卯</option>
+														<option value="2012壬辰">2012壬辰</option>
+														<option value="2013癸巳">2013癸巳</option>
+														<option value="2014甲午">2014甲午</option>
+														<option value="2015乙未">2015乙未</option>
+														<option value="2016丙申">2016丙申</option>
+														<option value="2017丁酉">2017丁酉</option>
+														<option value="2018戊戌">2018戊戌</option>
+														<option value="2019己亥">2019己亥</option>
+													</select>&nbsp; 月:<select name="D2" size="1">
+														<option value="01">正月</option>
+														<option value="02">二月</option>
+														<option selected value="03">三月</option>
+														<option value="04">四月</option>
+														<option value="05">五月</option>
+														<option  value="06">六月</option>
+														<option value="07">七月</option>
+														<option value="08">八月</option>
+														<option value="09">九月</option>
+														<option value="10">十月</option>
+														<option value="11">冬月</option>
+														<option value="12">腊月</option>
+													</select>&nbsp; 日:<select name="D3" size="1">
+														<option value="01">初一</option>
+														<option value="02">初二</option>
+														<option value="03">初三</option>
+														<option value="04">初四</option>
+														<option value="05">初五</option>
+														<option value="06">初六</option>
+														<option value="07">初七</option>
+														<option value="08">初八</option>
+														<option value="09">初九</option>
+														<option value="10">初十</option>
+														<option selected  value="11">十一</option>
+														<option value="12">十二</option>
+														<option value="13">十三</option>
+														<option value="14">十四</option>
+														<option value="15">十五</option>
+														<option value="16">十六</option>
+														<option value="17">十七</option>
+														<option value="18">十八</option>
+														<option value="19">十九</option>
+														<option value="20">廿十</option>
+														<option value="21">廿一</option>
+														<option value="22">廿二</option>
+														<option value="23">廿三</option>
+														<option value="24">廿四</option>
+														<option value="25">廿五</option>
+														<option value="26">廿六</option>
+														<option value="27">廿七</option>
+														<option value="28">廿八</option>
+														<option value="29">廿九</option>
+														<option value="30">卅十</option>
+													</select>&nbsp; 时辰:<select name="D4" size="1">
+														<option value="01">子时:23点至 1点前</option>
+														<option value="02">丑时: 1点至 3点前</option>
+														<option value="03">寅时: 3点至 5点前</option>
+														<option value="04">卯时: 5点至 7点前</option>
+														<option value="05">辰时: 7点至 9点前</option>
+														<option  value="06">巳时: 9点至11点前</option>
+														<option value="07">午时:11点至13点前</option>
+														<option value="08">未时:13点至15点前</option>
+														<option value="09">申时:15点至17点前</option>
+														<option value="10">酉时:17点至19点前</option>
+														<option value="11">戌时:19点至21点前</option>
+														<option selected value="12">亥时:21点至23点前</option>
+													</select>  <input type="submit" value="发送" class="but100_30lan  "></p>
+
+
+											</td>
+										</tr><tr>
+										<td>
+											说明：请选择您的出生生辰　性格分析：可以了解您自己大体性格及环境产生潜移默化的影响、对您的改善建议．
+											限年选天盘，点递交就可以查看具体内容．生辰要阴历．</td>
+									</tr>
+									</table></form>
+									</div>
+									<div class="data-title">
+										<h3>阴历阳历转换</h3>
+									</div>
+									<div class="job-normal-list clearfix">
+
+									<table width="100%" border="0" cellpadding="0" cellspacing="0"  id="list" class="link_lan">
+
+
+
+										<tr>
+											<td><FORM>
+												<p align="left"><FONT style="FONT-SIZE: 14px">
+													阴历转阳历 </FONT>输入农历日期：19 <SELECT size=1 name=year>
+													<OPTION>50<OPTION>51<OPTION>52<OPTION>53<OPTION>54<OPTION>
+													55<OPTION>56<OPTION>57<OPTION>58<OPTION>59<OPTION>60<OPTION>
+													61<OPTION>62<OPTION>63<OPTION>64<OPTION>65<OPTION>66<OPTION>
+													67<OPTION>68<OPTION>69<OPTION>70<OPTION>71<OPTION>72<OPTION>
+													73<OPTION>74<OPTION>75<OPTION>76<OPTION>77<OPTION>78<OPTION>
+													79<OPTION
+														selected>80<OPTION>81<OPTION>82<OPTION>83<OPTION>84<OPTION>
+													85<OPTION>86<OPTION>87<OPTION>88<OPTION>89<OPTION>90<OPTION>
+													91<OPTION>92<OPTION>93<OPTION>94<OPTION>95<OPTION>96<OPTION>
+													97<OPTION>98<OPTION>99</OPTION></SELECT>年
+													<SELECT size=1 name=month> <OPTION
+															selected>1<OPTION>2<OPTION>3<OPTION>4<OPTION>5<OPTION>
+														6<OPTION>7<OPTION>8<OPTION>9<OPTION>10<OPTION>11<OPTION>
+														12</OPTION></SELECT>月
+													<SELECT size=1 name=day> <OPTION
+															selected>1<OPTION>2<OPTION>3<OPTION>4<OPTION>5<OPTION>
+														6<OPTION>7<OPTION>8<OPTION>9<OPTION>10<OPTION>11<OPTION>
+														12<OPTION>13<OPTION>14<OPTION>15<OPTION>16<OPTION>17<OPTION>
+														18<OPTION>19<OPTION>20<OPTION>21<OPTION>22<OPTION>23<OPTION>
+														24<OPTION>25<OPTION>26<OPTION>27<OPTION>28<OPTION>29<OPTION>
+														30</OPTION></SELECT>日
+													<INPUT type=checkbox name=r>闰月 <INPUT  class="but100_30lan " onclick=ctog(this.form) type=button value="-->" name=cg>
+													<INPUT size=20 name=answer class="input_text_200"> </FORM></td>
+										</tr>
+										<tr>
+											<td><FORM>
+												<p align="left"><FONT style="FONT-SIZE: 14px">
+													阳历转阴历 </FONT>输入公历日期：19 <SELECT size=1 name=year>
+													<OPTION>50<OPTION>51<OPTION>52<OPTION>53<OPTION>54<OPTION>
+													55<OPTION>56<OPTION>57<OPTION>58<OPTION>59<OPTION>60<OPTION>
+													61<OPTION>62<OPTION>63<OPTION>64<OPTION>65<OPTION>66<OPTION>
+													67<OPTION>68<OPTION>69<OPTION>70<OPTION>71<OPTION>72<OPTION>
+													73<OPTION>74<OPTION>75<OPTION>76<OPTION>77<OPTION>78<OPTION>
+													79<OPTION
+														selected>80<OPTION>81<OPTION>82<OPTION>83<OPTION>84<OPTION>
+													85<OPTION>86<OPTION>87<OPTION>88<OPTION>89<OPTION>90<OPTION>
+													91<OPTION>92<OPTION>93<OPTION>94<OPTION>95<OPTION>96<OPTION>
+													97<OPTION>98<OPTION>99</OPTION></SELECT>年
+													<SELECT size=1 name=month> <OPTION
+															selected>1<OPTION>2<OPTION>3<OPTION>4<OPTION>5<OPTION>
+														6<OPTION>7<OPTION>8<OPTION>9<OPTION>10<OPTION>11<OPTION>
+														12</OPTION></SELECT>月
+													<SELECT size=1 name=day> <OPTION
+															selected>1<OPTION>2<OPTION>3<OPTION>4<OPTION>5<OPTION>
+														6<OPTION>7<OPTION>8<OPTION>9<OPTION>10<OPTION>11<OPTION>
+														12<OPTION>13<OPTION>14<OPTION>15<OPTION>16<OPTION>17<OPTION>
+														18<OPTION>19<OPTION>20<OPTION>21<OPTION>22<OPTION>23<OPTION>
+														24<OPTION>25<OPTION>26<OPTION>27<OPTION>28<OPTION>29<OPTION>
+														30<OPTION>31</OPTION></SELECT>日　&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+													<INPUT onclick=gtoc(this.form) type=button value="-->"  class="but100_30lan  " name=cg>
+													<INPUT size=21 name=answer class="input_text_200">
+											</FORM></td>
+										</tr>
+
+									</table>
+								</div>
+							</div>
+						</div>
+
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	{#include file="user/footer.htm"#}
+</body>
+</html>

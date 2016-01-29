@@ -1,0 +1,96 @@
+{#include file="sys/admin_header.htm"#}
+<script>
+
+    $(document).ready(function() {
+
+
+        showmenu("#parent_name", "#menu4", "#value");
+
+    })
+
+</script>
+<div class="admin_main_nr_dbox">
+    <div class="pagetit">
+        <div class="ptit"> {#$pageheader#}</div>
+        {#include file="replace/admin_replace_nav.htm"#}
+        <div class="clear"></div>
+    </div>
+
+    <div class="toptit">修改</div>
+
+    <div class="admintable">
+
+        <form action="?act=edit_save" method="post" name="FormData" id="FormData">
+
+            {#$inputtoken#}
+            <table width="100%" border="0" cellpadding="3" cellspacing="0">
+                <tr>
+                    <td class="tit">来源：</td>
+                </tr>
+                <tr>
+
+                    <td>
+                        <input name="source" type="text" class="input_text_200" maxlength="30" value="{#$show.source#}"/>
+
+                        <span class="admin_note">来源</span></td>
+                </tr>
+
+                <tr>
+                    <td class="tit">内容：</td>
+                </tr>
+                <tr>
+
+                    <td>
+                        <input name="name" type="text" class="input_text_200" maxlength="20" value="{#$show.name#}"/>
+                        <span class="admin_note">上传的excel里的内容</span></td>
+                </tr>
+                <tr>
+                    <td class="tit">替换后内容：</td>
+                </tr>
+                <tr>
+                    <td class="tit">字段：</td>
+                </tr>
+                <tr>
+
+                    <td>
+                        <div>
+                            {#qishi_get_classify set="类型:QS_relpace_title,列表名:li"#}
+                            <input type="text" value="{#$show.parent_name|default:"请选择"#}"  readonly="readonly" name="parent_name" id="parent_name" class="input_text_200 input_text_selsect"/>
+                            <input name="value" id="value" type="hidden" value="{#$show.parent_id#}" />
+                            <div id="menu4" class="menu">
+                                <ul>
+                                    {#foreach from=$li item=list#}
+                                    <li id="{#$list.key#}" title="{#$list.value#}">{#$list.value#}-{#$list.key#}</li>
+                                    {#/foreach#}
+                                </ul>
+                            </div>
+                        </div>
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <br/>
+                        <br/>
+                        <input name="id" type="hidden" value="{#$show.id#}"/>
+                        <input type="submit" name="Submit" value="确定提交" class="admin_submit"/>
+
+                        <input name="submit22" type="button" class="admin_submit" value="返 回"
+                               onclick="window.location='?act='"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+</div>
+{#include file="sys/admin_footer.htm"#}
+</body>
+</html>

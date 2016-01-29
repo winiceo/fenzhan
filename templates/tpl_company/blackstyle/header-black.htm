@@ -1,0 +1,69 @@
+<div class="user_top_nav" >
+	<div class="main">
+	    <div class="ltit"><span id="top_loginform"></span></div>	
+	    <div class="rlink link_lan">
+	    	<a href="{#$QISHI.site_dir#}mobile/" class="mphone">手机频道</a>
+			<a href="{#$QISHI.site_dir#}salary">薪酬统计</a>
+			<a href="{#$QISHI.site_dir#}">网站首页</a>
+			<a href="{#$QISHI.site_dir#}plus/shortcut.php">保存到桌面</a>
+	    </div>	
+	    <div class="clear"></div>
+    </div>
+</div>
+{#qishi_company_show set="列表名:company,企业ID:GET[id],企业介绍长度:150"#}
+<div class="com_top_box">
+	<div class="com_logo f-left"><img src="{#$company.logo#}" alt="公司logo" /></div>
+	<div class="com_info f-left">
+		<div class="t">{#$company.companyname#}</div>
+		<div class="i">{#if $company.trade_cn#}行业：{#$company.trade_cn#}&nbsp;&nbsp;&nbsp;&nbsp;{#/if#}{#if $company.nature_cn#}性质：{#$company.nature_cn#}&nbsp;&nbsp;&nbsp;&nbsp;{#/if#}{#if $company.district_cn#}地区：{#$company.district_cn#}{#/if#}</div>
+		<div class="i">{#if $company.scale_cn#}规模：{#$company.scale_cn#}&nbsp;&nbsp;&nbsp;&nbsp;{#/if#}{#if $company.website#}网址：{#$company.website#}{#/if#}</div>
+		<div class="i">{#if $company.address#}地址：{#$company.address#}{#/if#}</div>
+	</div>
+	<div class="com_Qrcode f-left">
+		<div class="qrimg"><img src="{#$QISHI.site_domain#}{#$QISHI.site_dir#}plus/url_qrcode.php?url={#$QISHI.site_domain#}{#$QISHI.site_dir#}m/m-wzp.php?company_id={#$company.id#}" alt="扫描二维码" /></div>
+		<div class="qrtext">微信扫描，手机浏览</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<script type="text/javascript">
+//顶部部登录
+$.get("{#$QISHI.site_dir#}plus/ajax_user.php", {"act":"top_loginform"},
+function (data,textStatus)
+{			
+$("#top_loginform").html(data);
+}
+);
+//
+var headHeight=$(".header").height()+10;
+    var nav=$(".nav");
+    $(window).scroll(function(){
+        if($(this).scrollTop()>headHeight){
+            nav.addClass("navFix");
+            }
+        else{
+            nav.removeClass("navFix");
+            }
+});
+//
+$("#t_so").hover(
+function(){
+$("#t_so").css("position","relative");
+$("#op_search").show();
+},
+function(){
+$("#op_search").hide();
+$("#t_so").css("position","");	
+}
+);
+$(".top-search-button").click(function()
+{
+	$("body").append('<div id="pageloadingbox">页面加载中....</div><div id="pageloadingbg"></div>');
+	$("#pageloadingbg").css("opacity", 0.5);
+	$.get("{#$QISHI.site_dir#}plus/ajax_search_location.php", {"act":$(this).attr('id'),"key":$("#top-search-key").val()},
+			function (data,textStatus)
+			 {
+				 window.location.href=data;
+			 }
+		);
+});
+</script>

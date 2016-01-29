@@ -1,0 +1,139 @@
+{#include file="sys/admin_header.htm"#}
+<script src="{#$QISHI.site_dir#}data/cache_classify.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+$(document).ready(function()
+{
+  showmenulayer("#s_districtname","#menu1","#s_district","","",QS_city);
+  $("#form1").validate({
+     rules:{
+     s_sitename: "required",
+     s_district: "required",
+     s_domain: "required"
+    },
+      messages: {
+      s_sitename: {
+      required: "请输入分站名称"
+     },
+      s_district: {
+      required: jQuery.format("请选择分站地区")
+     },
+     s_domain: {
+      required: "请输入域名"
+     }
+    },
+    errorPlacement: function(error, element) {
+      if ( element.is(":radio") )
+          error.appendTo( element.parent().next().next() );
+      else if ( element.is(":checkbox") )
+          error.appendTo ( element.next());
+      else
+          error.appendTo(element.parent());
+    }
+      });
+  });
+</script>
+<div class="admin_main_nr_dbox">
+ <div class="pagetit">
+	<div class="ptit"> {#$pageheader#}</div>
+	{#include file="subsite/admin_subsite_nav.htm"#}
+  <div class="clear"></div>
+</div>
+<div class="toptip">
+<h2>提示：</h2>
+<p>
+新增分站后，需要将分站域名解析至主站，同时主网站需绑定此分站域名；<br />
+如需使用触屏版域名，需要将触屏版域名解析至主站，同时主网站下的m目录需绑定此域名。
+</p>
+</div>  
+ <div class="toptit">新增分站</div>
+ 
+    <form id="form1" name="form1" method="post" enctype="multipart/form-data" action="?act=add_save" >
+	{#$inputtoken#}
+  <table width="100%" border="0" cellpadding="4" cellspacing="0"   >
+    <tr>
+      <td width="120" height="30" align="right"  ><span style="color:#FF3300; font-weight:bold">*</span> 分站名称：</td>
+      <td  ><input name="s_sitename" type="text" class="input_text_200"   maxlength="100" value=""/>
+      <span class="admin_note">如：太原人才网</span></td>
+    </tr>
+	    <tr>
+      <td height="30" align="right"  >分站状态：</td>
+      <td   >
+	   <label><input name="s_effective" type="radio"   value="1" checked="checked"/>可用</label>
+       &nbsp;&nbsp;&nbsp;&nbsp; 
+	   <label ><input type="radio" name="s_effective" value="0"  />禁用</label>
+	  </td>
+    </tr>
+    <tr>
+          <td height="30" align="right" ><span style="color:#FF3300; font-weight:bold">*</span> 分站地区：</td>
+          <td >
+      <div>
+        <input type="text" value="请选择"  readonly="readonly" name="s_districtname" id="s_districtname" class="input_text_200 input_text_selsect"/>
+    <input name="s_district" id="s_district" type="hidden" value="" />
+    <div id="menu1" class="dmenu shadow">
+      <ul>
+      {#qishi_get_classify set="列表名:c_province,类型:QS_district,id:0"#}
+      {#foreach from=$c_province item=list#}
+      <li id="{#$list.id#}" title="{#$list.categoryname#}">{#$list.categoryname#}</li>
+      {#/foreach#}
+      </ul>
+    </div>
+      </div>
+
+      </td>
+        </tr>
+    <tr>
+      <td height="30" align="right"  ><span style="color:#FF3300; font-weight:bold">*</span> 域名绑定：</td>
+      <td   ><input name="s_domain" type="text" class="input_text_200"    value=""/>
+      <span class="admin_note">输入二级域名，不带http://，如：0351.rencai.com</span></td>
+    </tr>
+    <tr>
+      <td height="30" align="right"  > 触屏版域名绑定：</td>
+      <td   ><input name="s_m_domain" type="text" class="input_text_200"    value=""/>
+      <span class="admin_note">输入二级域名，不带http://，如：m0351.rencai.com</span></td>
+    </tr>
+    <tr>
+      <td height="30" align="right"  >风格模版：</td>
+      <td ><input name="s_tpl" type="text" class="input_text_200"  value=""/>
+	  <span class="admin_note">如不填写则为默认模版</span>
+	  </td>
+    </tr>
+		
+    <tr>
+        <td width="120" align="right" >分站排序：</td>
+        <td ><input name="s_order" type="text"  class="input_text_150" id="s_order" style="width:50px;" maxlength="8" onkeyup="if(event.keyCode !=37 && event.keyCode != 39) value=value.replace(/\D/g,'');"onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/\D/g,''))"/>
+        <span>&nbsp;&nbsp;&nbsp;&nbsp;数字越大越靠前</span></td>
+    </tr>
+	<tr>
+      <td height="30" align="right"  >分站LOGO：</td>
+      <td ><input name="s_logo" type="file"   style="width:273px; font-size:12px; padding:3px;" onKeyDown="alert('请点击右侧“浏览”选择您电脑上的图片！');return false"/> 
+	  </td>
+    </tr>
+	  <tr>
+      <td height="30" align="right"  >title：</td>
+      <td   ><input name="s_title" type="text" class="input_text_200"    value=""/>
+      </td>
+    </tr>
+    <tr>
+      <td height="30" align="right"  >Keywords：</td>
+      <td   ><input name="s_keywords" type="text" class="input_text_400"    value=""/></td>
+    </tr>
+    <tr>
+      <td height="30" align="right"  >Description：</td>
+      <td   >
+        <textarea name="s_description" class="company_mb_textarea" id="s_description" style="width:500px; height:100px;" ></textarea></td>
+    </tr>
+	
+	
+    <tr>
+      <td height="30" align="right"  >&nbsp;</td>
+      <td height="50"  > 
+            <input name="submit3" type="submit" class="admin_submit"    value="添加"/>
+        <input name="submit22" type="button" class="admin_submit"    value="返回" onclick="Javascript:window.history.go(-1)"/>
+       </td>
+    </tr>
+  </table>
+    </form>
+</div>
+{#include file="sys/admin_footer.htm"#}
+</body>
+</html>

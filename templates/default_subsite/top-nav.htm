@@ -1,0 +1,51 @@
+<div class="top-tips f-left"><span>欢迎来到{#$QISHI.site_name#}</span>
+<span id="top_loginform"></span></div>
+<div class="top-nav f-right">
+	<a href="{#$QISHI.site_dir#}mobile" class="phone underline">手机频道</a>
+	<a href="{#$QISHI.site_dir#}salary" class="underline">薪酬统计</a>
+	<a href="{#$QISHI.site_dir#}" class="underline">网站首页</a>
+	<a href="{#$QISHI.site_dir#}plus/shortcut.php" class="underline">保存到桌面</a>
+</div>
+<script type="text/javascript">
+	$(document).ready(function() {
+		//顶部部登录
+		$.get("{#$QISHI.site_dir#}plus/ajax_user.php", {"act":"top_loginform"},
+		function (data,textStatus)
+		{			
+		$("#top_loginform").html(data);
+		}
+		);
+		// 搜索按钮点击
+		$("#btnForIndexSearch").click(function() {
+			search_location("{#$QISHI.site_dir#}");
+		});
+		// 搜索跳转
+		function search_location(dir) {
+			generateBackground();
+			var listype = 'QS_jobslist';
+			var key=$("input[name=key]").val();
+			var page=1;
+			$.get(dir+"plus/ajax_search_location.php", {"act":listype,"key":key,"page":page},
+				function (data,textStatus)
+				 {	
+					 window.location.href=data;
+				 },"text"
+			);
+		}
+		// 正在加载
+		function generateBackground() {
+			var backgroundHtm = '<div id="bonfire-pageloader"><div class="bonfire-pageloader-icon"></div></div>';
+			var html = jQuery('body');
+			html.append(backgroundHtm);
+			jQuery(window).resize(function(){
+				 resizenow();
+			});
+			function resizenow() {
+				var browserwidth = jQuery(window).width();
+				var browserheight = jQuery(window).height();
+				jQuery('.bonfire-pageloader-icon').css('right', ((browserwidth - jQuery(".bonfire-pageloader-icon").width())/2)).css('top', ((browserheight - jQuery(".bonfire-pageloader-icon").height())/2 + $(document).scrollTop() - 109));
+			};
+			resizenow();
+		}
+	});
+</script>

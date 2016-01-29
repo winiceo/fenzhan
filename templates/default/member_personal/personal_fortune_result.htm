@@ -1,0 +1,216 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=gb2312">
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<title>{#$title#}</title>
+	<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico"/>
+	<meta name="author" content="骑士CMS"/>
+	<meta name="copyright" content="74cms.com"/>
+	<link rel="stylesheet" href="{#$QISHI.site_template#}css/user_common.css"/>
+	<link rel="stylesheet" href="{#$QISHI.site_template#}css/user_personal.css"/>
+	<link href="{#$QISHI.site_template#}css/user_company.css" rel="stylesheet" type="text/css"/>
+
+	<script src="{#$QISHI.site_template#}js/jquery.js"></script>
+	<script src="{#$QISHI.site_template#}js/date.js"></script>
+	<script src="{#$QISHI.site_template#}js/jquery.validate.min.js" type='text/javascript'
+			language="javascript"></script>
+	<script>
+		$(document).ready(function () {
+
+		});
+	</script>
+	<style type="text/css">
+		.data-box {
+			border: 1px solid #ccc;
+			background-color: #fff;
+			font-family: "SimSun";
+			margin-top: 10px;
+		}
+
+		.data-box .data-title {
+			padding: 0 15px;
+			height: 50px;
+			line-height: 50px;
+			text-align: left;
+			background-color: #f5f5f5;
+			border-bottom: 1px solid #ccc;
+		}
+
+		.link_lan tr {
+			height: 50px;
+		}
+
+		.link_lan tr td {
+			padding-left: 20px;
+		}
+
+		select {
+
+			height: 30px;
+			font-size: 12px;
+			line-height: 1;
+			border: 1px solid gray;
+
+		}
+
+		#AutoNumber1 {
+			border: 1px solid red;
+			width: 100%;
+			font-size: 14px;
+		}
+	</style>
+	<style type="text/css">
+		.data-box {
+			border: 1px solid #ccc;
+			background-color: #fff;
+			font-family: "SimSun";
+			margin-top: 10px;
+		}
+		.data-box .data-title {
+			padding: 0 15px;
+			height: 50px;
+			line-height: 50px;
+			text-align: left;
+			background-color: #f5f5f5;
+			border-bottom: 1px solid #ccc;
+		}
+		.link_lan tr{
+			height:50px;
+		}
+		.link_lan tr td{
+			padding-left:20px;
+		}
+		select {
+
+
+			height:30px;
+			font-size: 12px;
+			line-height: 1;
+			border: 1px solid gray;
+
+
+
+		}
+		.tableall{ font-size:14px;/*_width:788px;*/}
+		.tableall table{
+			width:98%;
+
+			border-collapse: collapse;
+			border-spacing: 0;
+			empty-cells: show;
+
+		}
+
+		.tableall td, .tableall th{ padding:8px 1px;}
+		.tableall .lim{width:300px;float:left;}
+		.tableall .rim{width:300px;float:left;}
+		.tableall .photobox{ margin-top:25px; margin-bottom:50px;}
+		.tableall .photobox .l{float:left; width:280px; height:350px; border-right:1px #CCCCCC solid}
+		.tableall .photobox .l .bg{ border:1px #CCCCCC solid; width:280px; height:350px;background:url(../images/23.gif);text-align: center;vertical-align:middle;overflow:hidden;}
+		.tableall .photobox .r{float:left; width:150px; padding-left:20px;}
+		.tableall .photobox .r .rimg {width:120px;height:150px;overflow:hidden;}
+		.tableall .photobox .r .tit{ font-size:14px; padding-bottom:8px; color:#000000;}
+		.tableall .photobox .r p{ font-size:12px; line-height:200%;}
+
+		.data-box {
+			border: 0px solid #ccc;
+			background-color: #fff;
+			font-family: "SimSun";
+			margin-top: 10px;
+		}
+
+		.data-box .data-title {
+			padding: 0 15px;
+			height: 50px;
+			line-height: 50px;
+			text-align: left;
+			background-color: #f5f5f5;
+			border-bottom: 1px solid #ccc;
+		}
+
+		.link_lan tr {
+			height: 50px;
+		}
+
+		.link_lan tr td {
+			padding-left: 20px;
+		}
+
+		select {
+
+			height: 30px;
+			font-size: 12px;
+			line-height: 1;
+			border: 1px solid gray;
+
+		}
+
+		#AutoNumber1 {
+			border: 1px solid red;
+			width: 100%;
+			font-size: 14px;
+		}
+	</style>
+</head>
+<body {#if
+	  $QISHI.body_bgimg#}style="background:url({#$QISHI.site_domain#}{#$QISHI.site_dir#}data/{#$QISHI.updir_images#}/{#$QISHI.body_bgimg#}) repeat-x center 38px;"
+	  {#
+/if#}>
+{#include file="user/header.htm"#}
+<div class="page_location link_bk">当前位置：<a href="{#$QISHI.site_dir#}">首页</a> > <a href="{#$userindexurl#}">会员中心</a> >
+	收到的简历
+</div>
+<div class="usermain">
+	<div class="leftmenu  com link_bk">
+		{#include file="member_personal/left.htm"#}
+	</div>
+	<div class="rightmain">
+		<div class="bbox1">
+			<div class="topnav get_resume">
+				<div class="titleH1">
+					<div class="h1-title">周易性格评测</div>
+				</div>
+				<div class="navs link_bk">
+					<a href="?act=fortune" {#if $act=="fortune"#}class="se"{#/if#}>周易性格评测<span class="check"></span></a>
+
+					<a href="?act=fotrune_list" {#if $act=="fotrune_list"#}class="se"{#/if#}>测算结果列表<span
+							class="check"> </span></a>
+					<a href="?act=fotrune_show&id={#$result.id#}" {#if $act=="fotrune_show"#}class="se"{#/if#}>测算结果<span
+							class="check"> </span></a>
+					<div class="clear"></div>
+				</div>
+			</div>
+			<div class="send-tip-box">
+				<h3>小贴士</h3>
+				<p>
+					祝福:这是来自密教图腾上的文字.不管你迷信不迷信,这个网页应该读一下,好吗?她将会带你好运,希望你一生幸福平安<br>
+				</p>
+
+			</div>
+			<div class="resume-send-form">
+
+				<div class="data-title">
+					<h3>{#$result.name#}-{#$result.category_cn#},结果如下</h3>
+				</div>
+
+				<div align="center">
+					<div class="data-box">
+
+						<div class="job-normal-list  tableall clearfix">
+							{#$result.result#}
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+{#include file="user/footer.htm"#}
+</body>
+</html>

@@ -1,0 +1,62 @@
+<div class="sub-header">
+	<div class="sub-top">
+		<div class="sub-container clearfix">
+			{#include file="top-nav.htm"#}
+		</div>
+	</div>
+	<div class="header-main sub-container clearfix">
+		<div class="logo-box f-left"><a href="{#$QISHI.site_dir#}"><img src="{#$QISHI.upfiles_dir#}{#$QISHI.web_logo#}" alt="{#$QISHI.site_name#}" height="70" /></a></div>
+		<!-- 分站 -->
+		<div class="station-choose f-left">
+			<p class="station-name">{#$QISHI.site_name#}</p>
+			<div class="station-control">
+				<div class="station-item">{#if $QISHI.subsite_districtname#}{#$QISHI.subsite_districtname#}{#else#}总站{#/if#}<i class="station-arrow"></i></div>
+				<div class="station-drop-wrapper">
+					<div class="drop-title clearfix">
+						<h4 class="f-left">地区分站 · <a href="{#$QISHI.main_domain#}" class="underline">[总站]</a></h4>
+						<span class="f-right">一站注册，多站发布</span>
+					</div>
+					<ul class="station-list clearfix">
+						{#qishi_allsite set="列表名:city"#}
+						{#foreach from=$city item=li#}
+						<li class="f-left"><a href="{#$li.s_domain#}" class="underline">{#$li.s_districtname#}</a></li>
+						{#/foreach#}
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!-- 分站结束 -->
+		<div class="header-search f-right">
+			<div class="search-text f-left"><input type="text" name="key" id="key" /></div>
+			<div class="search-submit f-left"><input type="button" id="btnForIndexSearch" value="搜&nbsp;索" /></div>
+			<div class="search-link f-left"><a href="{#"QS_jobslist"|qishi_url#}" target="_blank" class="underline">高级搜索</a><br /><a href="{#"QS_map"|qishi_url#}" class="underline" target="_blank">附近工作</a></div>
+		</div>
+	</div>
+	<ul class="header-nav sub-container clearfix">
+		{#qishi_nav set="调用名称:QS_top,列表名:list,分割:10"#}
+		{#foreach from=$list item=list#}
+		<li class="nav-item f-left {#if $list.tag==$page_select && $list.tag!=""#}active{#/if#}"><a href="{#$list.url#}" target="{#$list.target#}">{#$list.title#}</a></li>
+		{#/foreach#}
+	</ul>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('.station-control').on('click', function(e) {
+			if("{#$QISHI.sel_subsite_method#}"==0){
+				$(this).find('.station-drop-wrapper').toggle();
+				$('.station-item').toggleClass('open');
+				e.stopPropagation();
+				$(document).one('click', function(e) {
+					$('.station-drop-wrapper').hide();
+					$('.station-item').removeClass('open');
+				});
+			}else{
+				location.href='{#$QISHI.site_dir#}substation';
+			}
+		});
+		$('.station-drop-wrapper').on('click', function(e) {
+			e.stopPropagation();
+		});
+	});
+</script>

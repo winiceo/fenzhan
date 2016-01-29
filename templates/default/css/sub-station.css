@@ -1,0 +1,45 @@
+/*选择分站独立页面*/
+body {margin-left: 0px;margin-top: 0px;margin-right: 0px;margin-bottom: 0px;font-size:12px; color: #333333; font-family:Arial, Helvetica, "Microsoft Yahei", sans-serif; background-color:#ffffff;}
+form,p,h1,h2,h3,h4,input{ margin:0px; padding:0px;}
+ul { padding:0px; margin:0px;}
+li { padding:0px; margin:0px;line-height:180%;list-style-type:none;}
+img{border:0;vertical-align: middle;}
+input{font-family: "Microsoft Yahei";outline: none;}
+input:focus{outline: none;}
+a{text-decoration: none;}
+a.underline:hover{text-decoration: underline;}
+.clearfix:after{content:"";display:block;clear:both;}
+.clearfix{zoom:1;}
+.f-left{float: left;}
+.f-right{float: right;}
+input.checkbox{position: relative;margin-right: 3px;top:2px;vertical-align: baseline;}
+.sub-container{width: 1200px;margin:0 auto;}
+.sub-page-header{height: 240px;width: 100%;background-color: #fff;border-bottom:2px solid #ff7200;}
+.sub-page-header .logo-box{margin-top: 73px;}
+.sub-page-header .sub-bg-text{margin-left: 45px;background: url(../images/substation-bg.jpg) no-repeat 0px 0px;width: 632px;height: 195px;margin-top: 25px;}
+.sub-page-header .sub-bg-text p{margin:45px 0 0 195px;line-height: 30px;font-size: 13px;color:#333;text-indent:3em;vertical-align: bottom;letter-spacing: 1px;}
+.sub-page-header .sub-bg-text p a{color:#ff7200;font-size: 18px;}
+.sub-page-header .sub-right-code{width: 87px;margin-right: 52px;margin-top:76px;text-align: center;white-space: nowrap;}
+.sub-page-header .sub-right-code .code-img{width: 87px;height: 87px;overflow: hidden;margin-bottom: 8px;}
+.sub-page-header .sub-right-code p{font-size: 14px;color:#333;}
+.s-page-wrapper{margin-top: 20px;border:1px solid #e2e2e2;}
+.s-page-wrapper .s-page-filter{padding:20px;border-bottom: 1px solid #e2e2e2;line-height: 38px;}
+.s-page-wrapper .s-page-filter .puick-enter span{font-size: 14px;color:#666;}
+.s-page-wrapper .s-page-filter .puick-enter .puick-enter-text input{font-size: 12px;color:#666;padding:;line-height: 18px;height:18px;padding:9px;border:1px solid #d9d9d9;width: 205px;background-color: #f7f7f7;}
+.s-page-wrapper .s-page-filter .puick-enter .puick-hot{margin-left: 34px;font-size: 14px;color:#999;}
+.s-page-wrapper .s-page-filter .puick-enter .puick-hot a{color:#666;margin-left:15px;}
+.s-page-wrapper .s-page-filter .enter-index{font-size: 14px;color:#0180cf;line-height: 38px;}
+.station-set{padding:25px 20px;}
+.station-set h3{font-size: 14px;font-weight: normal;color:#666;}
+.station-set .set-list{width: 579px;overflow: hidden;white-space: nowrap;text-overflow:ellipsis;}
+.station-set .set-list .set-item{margin-top: 15px;height: 32px;width: 579px;}
+.station-set .set-list .set-item .station-word{width: 30px;height: 30px;border:1px solid #ddd;display: inline-block;line-height: 30px;text-align: center;font-size: 14px;color:#666;background-color: #f0f0f0;font-weight: bold;}
+.station-set .set-list .set-item a{color:#0180cf;font-size: 12px;margin-left: 17px;}
+.sub-page-footer{padding:25px 0;text-align: center;font-size: 12px;line-height: 20px;color:#999;}
+
+/*框计算*/
+.autocomplete-w1 { position:absolute; top:0px; left:0px; margin:8px 0 0 6px; /* IE6 fix: */ _background:none; _margin:0; line-height:160% }
+.autocomplete { border:1px solid #CCCCCC; background:#FFF; cursor:default; text-align:left; max-height:350px; overflow:auto; margin:-6px 6px 6px -6px; /* IE6 specific: */ _height:350px;  _margin:0; _overflow-x:hidden; }
+.autocomplete .selected { background:#F0F0F0; }
+.autocomplete div { padding:2px 5px; white-space:nowrap; cursor: pointer;}
+.autocomplete strong { font-weight:normal; color:#3399FF; }
