@@ -21,6 +21,8 @@ $act = !empty($_REQUEST['act']) ? trim($_REQUEST['act']) : 'login';
 $smarty->assign('header_nav',"login");
 if($act == 'logout')
 {
+	require_once(QISHI_ROOT_PATH.'genv/lib.php');
+
 	setcookie("QS[uid]","",time() - 3600,$QS_cookiepath, $QS_cookiedomain);
 	setcookie("QS[username]","",time() - 3600,$QS_cookiepath, $QS_cookiedomain);
 	setcookie("QS[password]","",time() - 3600,$QS_cookiepath, $QS_cookiedomain);
@@ -39,6 +41,9 @@ if($act == 'logout')
 		include_once(QISHI_ROOT_PATH.'uc_client/client.php');	
 		$logoutjs=uc_user_synlogout();
 	}
+
+
+
 	$logoutjs.="<script language=\"javascript\" type=\"text/javascript\">window.location.href=\"".url_rewrite('QS_login')."\";</script>";
 	exit($logoutjs); 
 }

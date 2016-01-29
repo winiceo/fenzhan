@@ -10,8 +10,10 @@
  * ============================================================================
 */
 define('IN_QISHI', true);
+
 require_once(dirname(__FILE__) . '/company_common.php');
 $smarty->assign('leftmenu', "recruitment");
+//error_reporting(-1);
 
 if ($act == 'upload') {
     require_once(QISHI_ROOT_PATH . 'include/page.class.php');

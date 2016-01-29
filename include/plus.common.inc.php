@@ -14,7 +14,7 @@ define('QISHI_ROOT_PATH', dirname(dirname(__FILE__)).'/');
 error_reporting(E_ERROR);
 require_once(QISHI_ROOT_PATH.'data/config.php');
 ini_set('session.save_handler', 'files');
-session_save_path(QISHI_ROOT_PATH.'data/sessions/');
+session_save_path('/data/tmp/session/');
 session_start();
 header("Content-Type:text/html;charset=".QISHI_CHARSET);
 require_once(QISHI_ROOT_PATH.'include/mysql.class.php');

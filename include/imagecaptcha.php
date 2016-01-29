@@ -17,7 +17,7 @@ header('Cache-Control: post-check=0, pre-check=0, max-age=0', false);
 header('Pragma: no-cache');
 define('QISHI_ROOT_PATH', dirname(dirname(__FILE__)).'/');
 ini_set('session.save_handler', 'files');
-session_save_path(QISHI_ROOT_PATH.'data/sessions/');
+session_save_path('/data/tmp/session/');
 session_start();
 error_reporting(E_ERROR);
 class imageCaptcha

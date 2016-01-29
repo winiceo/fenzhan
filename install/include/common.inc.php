@@ -17,7 +17,7 @@ error_reporting(E_ERROR );
 define('QISHI_ROOT_PATH', str_replace('install/include/common.inc.php', '', str_replace('\\', '/', __FILE__)));
 session_cache_limiter('private, must-revalidate');
 ini_set('session.save_handler', 'files');
-session_save_path(QISHI_ROOT_PATH.'data/sessions/');
+session_save_path('/data/tmp/session/');
 session_start();
 require_once (QISHI_ROOT_PATH.'install/include/common.fun.php');
 if (!empty($_GET))
