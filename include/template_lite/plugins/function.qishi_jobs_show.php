@@ -3,6 +3,7 @@ function tpl_function_qishi_jobs_show($params, &$smarty)
 {
 	global $db,$timestamp,$_CFG;
 	$arr=explode(',',$params['set']);
+
 	foreach($arr as $str)
 	{
 	$a=explode(':',$str);
@@ -24,9 +25,11 @@ function tpl_function_qishi_jobs_show($params, &$smarty)
 	}
 	$aset=array_map("get_smarty_request",$aset);
 	$aset['id']=$aset['id']?intval($aset['id']):0;
+
 	$aset['brieflylen']=isset($aset['brieflylen'])?intval($aset['brieflylen']):0;
 	$aset['listname']=$aset['listname']?$aset['listname']:"list";
-    $smarty->assign("is_reward",get_jobs_is_reward($_SESSION["uid"],$aset['id']));
+ 	$smarty->assign("is_reward",get_jobs_is_reward($aset['id']));
+
 	$wheresql=" WHERE id={$aset['id']} ";
 	$sql = "select id,subsite_id,uid,audit,display,setmeal_deadline,add_mode,amount,company_id,district_cn,contents,refreshtime,tag_cn,category,subclass,sdistrict,jobs_name,companyname,wage_cn,nature_cn,category_cn,sex_cn,age,education_cn,experience_cn,deadline,graduate from ".table('jobs').$wheresql." LIMIT 1";
 	$val=$db->getone($sql);
@@ -160,7 +163,6 @@ function tpl_function_qishi_jobs_show($params, &$smarty)
 	$user=get_jobs_username($val['uid']);
 	$hashstr=substr(md5($user['username']),8,16);
 	$smarty->assign('hashstr',$hashstr);
-    $smarty->assign("is_reward",get_jobs_is_reward($aset['id']));
 	$smarty->assign($aset['listname'],$val);
 }
 function GetJobsCompanyProfile($id)
