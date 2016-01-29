@@ -10,7 +10,10 @@ require_once(dirname(__FILE__).'/../vendor/autoload.php');
 
 require_once(dirname(__FILE__).'/../include/common.inc.php');
 require_once(QISHI_ROOT_PATH.'include/mysql.class.php');
-//$dbname="74cms";
+
+
+require ROOT . "data/config.php";
+
 $db = new mysql($dbhost,$dbuser,$dbpass,$dbname);
 
 require  'idiorm.php';

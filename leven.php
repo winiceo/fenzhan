@@ -26,7 +26,7 @@ $app = new \Slim\App($c);
  */
 function create_member($obj)
 {
-    require ROOT . "data/config.php";
+
     require ROOT . "include/fun_user.php";
     $pwd_hash = randstr();
     $name_rand = randusername();
@@ -269,32 +269,32 @@ $app->get('/genv/test1', function ($request, $response) {
 });
 
 $app->get('/genv/clear',function($request, $response){
-
+    global  $dbname;
     $table=array();
    // $table[]="qs_resume_field";
-    $table[]="qs_pms_sys";
+    $table[]="qs_link";
     $table[]="qs_gifts_type";
     $table[]="qs_admin";
-    $table[]="qs_link";
     $table[]="qs_explain_category";
-    $table[]="qs_ad_app_category";
+    $table[]="qs_pms_sys";
     $table[]="qs_notice_category";
+    $table[]="qs_ad_app_category";
     $table[]="qs_shop_hotword";
     $table[]="qs_text";
-    $table[]="qs_article_property";
+    $table[]="qs_sms_setmeal";
     $table[]="qs_link_category";
+    $table[]="qs_article_property";
     $table[]="qs_color";
     $table[]="qs_evaluation_type";
-    $table[]="qs_sms_setmeal";
-    $table[]="qs_promotion_category";
-    $table[]="qs_hunter_setmeal";
-    $table[]="qs_payment";
     $table[]="qs_train_setmeal";
+    $table[]="qs_payment";
+    $table[]="qs_hunter_setmeal";
+    $table[]="qs_promotion_category";
     $table[]="qs_setmeal";
     $table[]="qs_explain";
     $table[]="qs_navigation_category";
-    $table[]="qs_tpl";
     $table[]="qs_baiduxml";
+    $table[]="qs_tpl";
     $table[]="qs_plug";
     $table[]="qs_article_category";
     $table[]="qs_hrtools_category";
@@ -325,9 +325,19 @@ $app->get('/genv/clear',function($request, $response){
     $table[]="qs_hrtools";
     $table[]="qs_hotword";
 
-    $sql=" select TABLE_NAME from information_schema.tables where table_schema='74cms37' and table_type='base table'   order by table_rows;
-";
+    $sql=" select TABLE_NAME from information_schema.tables where table_schema='{$dbname}' and table_type='base table'   order by table_rows;";
+    //$sql=" select TABLE_NAME from information_schema.tables where table_schema='{$dbname}' and table_type='base table' and TABLE_ROWS>0   order by table_rows";
     $rs=\ORM::for_table("qs_resume_temp")->raw_query($sql)->find_array();
+//    foreach($rs as $key=>$value){
+//      //  dump($value);
+////        if(!in_array($value["TABLE_NAME"],$table)){
+////
+////            dump($value["TABLE_NAME"]);
+////           $rs=ORM::raw_execute("truncate   table `".$value['TABLE_NAME']."`");
+////             dump($rs);
+////        }
+//       echo '$table[]="'.$value["TABLE_NAME"].'";<br>';
+//    }
     foreach($rs as $key=>$value){
         if(!in_array($value["TABLE_NAME"],$table)){
 
@@ -335,9 +345,8 @@ $app->get('/genv/clear',function($request, $response){
             $rs=ORM::raw_execute("truncate   table `".$value['TABLE_NAME']."`");
             dump($rs);
         }
-       // echo '$table[]="'.$value["TABLE_NAME"].'";<br>';
+        // echo '$table[]="'.$value["TABLE_NAME"].'";<br>';
     }
-
 
 
 
@@ -385,6 +394,7 @@ $app->get('/genv/init', function ($request, $response) {
     $sql[]="alter table ".table('resume_temp')." add upload_uid int(10) not null ";
     $sql[]="alter table ".table('resume_temp')." add num tinyint(3) not null ";
     $sql[]="alter table ".table('resume_temp')." add upload_time int(11) not null ";
+    $sql[]="alter table ".table('resume_temp')." add status tinyint(1) not null  default 0";
 
     $sql[]="alter table ".table('resume_temp')." add upload_time int(11) not null ";
 
