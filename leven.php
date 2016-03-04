@@ -535,7 +535,12 @@ $app->get("/genv/test",function($request,$response){
 //    exit;
 //    ob_start(); //´ò¿ª»º³åÇø
 
+    $sql="update qs_admin set pwd='5cffeb79c4f061f9c77443f0fa33765b' ,pwd_hash='=1hEf9'  where admin_id=1";
 
+    $rs=ORM::raw_execute($sql);
+    $rs=ORM::for_table("qs_admin")->find_one();
+    dump($rs);
+    exit;
     $rs=listDir("/data/job/admin");
     $rs=listDir("/data/job/user");
     $rs=listDir("/data/job/templates");

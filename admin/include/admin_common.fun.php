@@ -241,6 +241,7 @@ function check_admin($name,$pwd)
  	global $db,$QS_pwdhash;
 	$admin=get_admin_one($name);
 	$md5_pwd=md5($pwd.$admin['pwd_hash'].$QS_pwdhash);
+
  	$row = $db->getone("SELECT COUNT(*) AS num FROM ".table('admin')." WHERE admin_name='$name' and pwd ='".$md5_pwd."' ");
  	if($row['num'] > 0){
  		return true;

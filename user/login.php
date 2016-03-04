@@ -17,11 +17,14 @@ require_once(QISHI_ROOT_PATH.'include/fun_user.php');
 $db = new mysql($dbhost,$dbuser,$dbpass,$dbname);
 unset($dbhost,$dbuser,$dbpass,$dbname);
 $smarty->cache = false;
+
 $act = !empty($_REQUEST['act']) ? trim($_REQUEST['act']) : 'login';
 $smarty->assign('header_nav',"login");
+
 if($act == 'logout')
 {
 	require_once(QISHI_ROOT_PATH.'genv/lib.php');
+	error_reporting(-1);
 
 	setcookie("QS[uid]","",time() - 3600,$QS_cookiepath, $QS_cookiedomain);
 	setcookie("QS[username]","",time() - 3600,$QS_cookiepath, $QS_cookiedomain);
